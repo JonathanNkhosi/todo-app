@@ -2,63 +2,72 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class TodoApp {
-   public static void main(String[] args) {
-     Scanner input = new Scanner(System.in);
-     ArrayList<String> tasks = new ArrayList<>();
+  
+   private ArrayList<String> tasks;
 
-     boolean running = true;
-     
-     while (running) {
-       printMenu();
-       int choice = input.nextInt();
-       input.nextLine();
-
-       switch(choice) {
-        case 1 -> addTasks(input, tasks);
-        case 2 -> viewTasks(tasks);
-        case 3 -> deleteTasks(input, tasks);
-        case 4 -> {
-           running = false;
-           System.out.println("Exiting....Goodbye");
-        }
-        default -> System.out.print("Invalid option");
-       }
-     }
-     input.close();
+   public TodoApp() {
+      tasks = new ArrayList<>();
    }
 
-   public static void printMenu() {
-     System.out.println("---TO DO LIST---");
-     System.out.println("1. Add Task");
-     System.out.println("2. View Task");
-     System.out.println("3. Delete Task");
-     System.out.println("4. Exit");
-     System.out.println("Choose an option from the menu");
+   public static void main(String[] args) {
+      Scanner input = new Scanner(System.in);
+
+      TodoApp app = new TodoApp();
+      boolean running = true;
+
+      while (running) {
+        app.printMenu();
+        int choice = input.nextInt();
+        input.nextLine();
+       
+        switch(choice) {
+           case 1 -> app.addTask(input);
+           case 2 -> app.viewTask();
+           case 3 -> app.deleteTask(input);
+           case 4 -> {
+              running = false;
+              System.out.println("Exiting...Goodbye");
+           }
+           default -> System.out.println("Invalid Option");
+        }
+      }
+      input.close();
    }
    
-   public static void addTasks(Scanner input, ArrayList<String> tasks) {
+   public void printMenu() {
+    System.out.println("----TO DO LIST MENU----");
+    System.out.println("1. Add Task");
+    System.out.println("2. View Task");
+    System.out.println("3. Delete Task");
+    System.out.println("4. Exit");
+    System.out.println("Select an option from the menu");
+   }
+
+   public void addTask(Scanner input) {
       System.out.println("Enter a task: ");
       String task = input.nextLine();
       tasks.add(task);
+      System.out.println("Task added");
    }
-   
-   public static void viewTasks(ArrayList<String> tasks) {
-     System.out.println("Your Tasks: ");
-     for (int i=0; i < tasks.size(); i++) {
-       System.out.println(i+1 + ". " + tasks.get(i));
+   public void viewTask() {
+      System.out.println("Your Tasks: ");
+      for (int i = 0; i < tasks.size(); i++) {
+        System.out.println(i+1 + ". " + tasks.get(i));
      }
      System.out.println();
    }
 
-   public static void deleteTasks(Scanner input, ArrayList<String>tasks) {
-     System.out.println("Enter task number to delete");
-     int index = input.nextInt();
-     input.nextLine();
+   public void deleteTask(Scanner input) {
+
+     if(tasks.isEmpty()) {
+       System.out.println("No task to delete");
+     }
+     System.out.println("Enter the number of the task you want to delete");
+      int index = input.nextInt();
+      input.nextLine();
      if (index > 0 && index <= tasks.size()) {
-       tasks.remove(index-1);
-       System.out.println("Deleted task");
-     } else {
-         System.out.println("Invalid option");
-       }
+        tasks.remove(index - 1);
+        System.out.println("Task deleted");
+     }
    }
 }
