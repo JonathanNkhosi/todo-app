@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class TodoApp {
     private ArrayList<String> tasks;
-    public TodoApp() {tasks = new ArrayList<>();}
+    public TodoApp() tasks = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
